@@ -1,0 +1,25 @@
+
+####nickname = "";
+altnickname = "dvstats";
+realname = "dvstats.github.io";
+####username = "";
+
+
+####listenport = 6667;
+####password = "";
+servers {
+    "irc.dextroverse.org"
+};
+####connectcmd = "PRIVMSG nickserv identify ********";
+leave = false;
+
+logging = true;
+channels = "#dextroverse";
+rejoin = true;
+antiidle = true;
+log {
+    channel = "#dextroverse";
+    type = messages, modes, joins, exits, quits, nickchanges, misc;
+    logfile = "dvchannel.log";
+};
+
