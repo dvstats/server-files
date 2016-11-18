@@ -1,3 +1,6 @@
+#
+# Place file in ~/.muh/ and configure all lines that start with ####.
+#
 
 ####nickname = "";
 altnickname = "dvstats";
