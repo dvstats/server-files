@@ -11,7 +11,8 @@
 ## Globals
 ##
 
-SFDIR=/home/breakthrough/git-repos/dvstats-server-files
+SF_DIR=/home/breakthrough/dvstats/server-files
+PROD_DIR=/home/breakthrough/dvstats/repo-live
 PUSH_TO_REMOTE=true
 
 
@@ -49,13 +50,14 @@ done
 
 echo 'DVSTATS: Generating stats file...
 '
-cd $SFDIR/output
+#cd $SF_DIR/output
+cd ~/.muh
 pisg \
-    --configfile=$SFDIR/config/pisg.conf            \
-    --cfg CssDir=$SFDIR/template/                   \
-    --cfg PageHead=$SFDIR/template/header.html      \
-    --cfg PageFoot=$SFDIR/template/footer.html
-
+    --configfile=$SF_DIR/config/pisg.conf            \
+    --cfg CssDir=$SF_DIR/template/                   \
+    --cfg PageHead=$SF_DIR/template/header.html      \
+    --cfg PageFoot=$SF_DIR/template/footer.html
+mv dvstats.html $SF_DIR/output/index.html
 echo '
 DVSTATS: Stats file generation complete.'
 
@@ -67,7 +69,7 @@ DVSTATS: Stats file generation complete.'
 echo 'DVSTATS: Post-processing stats file...'
 
 # Insert font/CSS template into HTML header
-sed -e "5r $SFDIR/template/fonts.html" -i $SFDIR/output/dvstats.html
+sed -e "5r $SF_DIR/template/fonts.html" -i $SF_DIR/output/index.html
 
 echo 'DVSTATS: Post-processing complete.'
 
@@ -76,8 +78,13 @@ echo 'DVSTATS: Post-processing complete.'
 ## Upload to Remote Git Repo
 ##
 
+cp $SF_DIR/output/index.html $PROD_DIR/index.html
+
 if [ "$PUSH_TO_REMOTE" = true ]; then
     echo 'DVSTATS: Pushing update to remote repository...
 '
+    cd $PROD_DIR
+    git commit -a -m "Scheduled stats update."
+    git push
 fi
 
